@@ -1,0 +1,38 @@
+<project>
+    <target name="clean">
+        <delete dir="build"/>
+        <mkdir dir="build/classes"/>
+    </target>
+
+    <target name="build" depends="clean">
+        <javac srcdir="src" destdir="build/classes" includeantruntime="false" />
+    </target>
+
+    <target name="jar" depends="build">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/ChatServer.jar" basedir="build/classes">
+            <manifest>
+              <attribute name="Main-Class"
+                         value="hr.fesb.java.chat.server.ChatServer"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="client-jar" depends="build">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/ChatClient.jar" basedir="build/classes">
+            <manifest>
+              <attribute name="Main-Class"
+                         value="hr.fesb.java.chat.client.ChatClient"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="build/jar/ChatServer.jar" fork="true"/>
+    </target>
+
+    <target name="client-run" depends="client-jar">
+        <java jar="build/jar/ChatClient.jar" fork="true"/>
+    </target>
+</project>
